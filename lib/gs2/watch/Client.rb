@@ -34,7 +34,7 @@ module Gs2 module Watch
     # @return [Array]
     #   * items
     #     [Array]
-    #       * alermId => アラームID
+    #       * alarmId => アラームID
     #       * ownerId => オーナーID
     #       * name => アラーム名
     #       * description => 説明文
@@ -49,15 +49,15 @@ module Gs2 module Watch
     #       * status => ステータス
     #       * lastStatusChangeAt => 最終ステータス更新日時
     #   * nextPageToken => 次ページトークン
-    def describe_alerm(pageToken = nil, limit = nil)
+    def describe_alarm(pageToken = nil, limit = nil)
       query = {}
       if pageToken; query['pageToken'] = pageToken; end
       if limit; query['limit'] = limit; end
       return get(
             'Gs2Watch', 
-            'DescribeAlerm', 
+            'DescribeAlarm', 
             @@ENDPOINT, 
-            '/alerm',
+            '/alarm',
             query);
     end
     
@@ -77,7 +77,7 @@ module Gs2 module Watch
     #   * notificationId => 通知ID
     # @return [Array]
     #   * item
-    #     * alermId => アラームID
+    #     * alarmId => アラームID
     #     * ownerId => オーナーID
     #     * name => アラーム名
     #     * description => 説明文
@@ -91,7 +91,7 @@ module Gs2 module Watch
     #     * updateAt => 更新日時
     #     * status => ステータス
     #     * lastStatusChangeAt => 最終ステータス更新日時
-    def create_alerm(request)
+    def create_alarm(request)
       if not request; raise ArgumentError.new(); end
       body = {}
       if request.has_key?('name'); body['name'] = request['name']; end
@@ -105,9 +105,9 @@ module Gs2 module Watch
       query = {}
       return post(
             'Gs2Watch', 
-            'CreateAlerm', 
+            'CreateAlarm', 
             @@ENDPOINT, 
-            '/alerm',
+            '/alarm',
             body,
             query);
     end
@@ -115,10 +115,10 @@ module Gs2 module Watch
     # アラームを取得
     # 
     # @param request [Array]
-    #   * alermName => アラーム名
+    #   * alarmName => アラーム名
     # @return [Array]
     #   * item
-    #     * alermId => アラームID
+    #     * alarmId => アラームID
     #     * ownerId => オーナーID
     #     * name => アラーム名
     #     * description => 説明文
@@ -132,30 +132,30 @@ module Gs2 module Watch
     #     * updateAt => 更新日時
     #     * status => ステータス
     #     * lastStatusChangeAt => 最終ステータス更新日時
-    def get_alerm(request)
+    def get_alarm(request)
       if not request; raise ArgumentError.new(); end
-      if not request.has_key?('alermName'); raise ArgumentError.new(); end
-      if not request['alermName']; raise ArgumentError.new(); end
+      if not request.has_key?('alarmName'); raise ArgumentError.new(); end
+      if not request['alarmName']; raise ArgumentError.new(); end
       query = {}
       return get(
           'Gs2Watch',
-          'GetAlerm',
+          'GetAlarm',
           @@ENDPOINT,
-          '/alerm/' + request['alermName'],
+          '/alarm/' + request['alarmName'],
           query);
     end
   
     # アラームを更新
     # 
     # @param request [Array]
-    #   * alermName => アラーム名
+    #   * alarmName => アラーム名
     #   * description => 説明文
     #   * expression => 演算子(>=, >, <, <=)
     #   * threshold => 閾値
     #   * notificationId => 通知ID
     # @return [Array]
     #   * item
-    #     * alermId => アラームID
+    #     * alarmId => アラームID
     #     * ownerId => オーナーID
     #     * name => アラーム名
     #     * description => 説明文
@@ -169,10 +169,10 @@ module Gs2 module Watch
     #     * updateAt => 更新日時
     #     * status => ステータス
     #     * lastStatusChangeAt => 最終ステータス更新日時
-    def update_alerm(request)
+    def update_alarm(request)
       if not request; raise ArgumentError.new(); end
-      if not request.has_key?('alermName'); raise ArgumentError.new(); end
-      if not request['alermName']; raise ArgumentError.new(); end
+      if not request.has_key?('alarmName'); raise ArgumentError.new(); end
+      if not request['alarmName']; raise ArgumentError.new(); end
       body = {}
       if request.has_key?('description'); body['description'] = request['description']; end
       if request.has_key?('expression'); body['expression'] = request['expression']; end
@@ -181,9 +181,9 @@ module Gs2 module Watch
       query = {}
       return put(
           'Gs2Watch',
-          'UpdateAlerm',
+          'UpdateAlarm',
           @@ENDPOINT,
-          '/alerm/' + request['alermName'],
+          '/alarm/' + request['alarmName'],
           body,
           query);
     end
@@ -191,17 +191,17 @@ module Gs2 module Watch
     # アラームを削除
     # 
     # @param request [Array]
-    #   * alermName => アラーム名
-    def delete_alerm(request)
+    #   * alarmName => アラーム名
+    def delete_alarm(request)
       if not request; raise ArgumentError.new(); end
-      if not request.has_key?('alermName'); raise ArgumentError.new(); end
-      if not request['alermName']; raise ArgumentError.new(); end
+      if not request.has_key?('alarmName'); raise ArgumentError.new(); end
+      if not request['alarmName']; raise ArgumentError.new(); end
       query = {}
       return delete(
             'Gs2Watch', 
-            'DeleteAlerm', 
+            'DeleteAlarm', 
             @@ENDPOINT, 
-            '/alerm/' + request['alermName'],
+            '/alarm/' + request['alarmName'],
             query);
     end
   
@@ -210,29 +210,29 @@ module Gs2 module Watch
     # 過去にアラームが発生した履歴などを確認できます。<br>
     #
     # @param request [Array]
-    #   * alermName => アラーム名
+    #   * alarmName => アラーム名
     # @param pageToken [String] ページトークン
     # @param limit [Integer] 取得件数
     # @return [Array]
     #   * items
     #     [Array]
     #       * eventId => アラームイベントID
-    #       * alermId => アラームID
+    #       * alarmId => アラームID
     #       * type => イベントの種類
     #       * eventAt => イベント発生日時
     #   * nextPageToken => 次ページトークン
-    def describe_alerm_event(request, pageToken = nil, limit = nil)
+    def describe_alarm_event(request, pageToken = nil, limit = nil)
       if not request; raise ArgumentError.new(); end
-      if not request.has_key?('alermName'); raise ArgumentError.new(); end
-      if not request['alermName']; raise ArgumentError.new(); end
+      if not request.has_key?('alarmName'); raise ArgumentError.new(); end
+      if not request['alarmName']; raise ArgumentError.new(); end
       query = {}
       if pageToken; query['pageToken'] = pageToken; end
       if limit; query['limit'] = limit; end
       return get(
           'Gs2Watch',
-          'DescribeAlermEvent',
+          'DescribeAlarmEvent',
           @@ENDPOINT,
-          '/alerm/' + request['alermName'] + '/event',
+          '/alarm/' + request['alarmName'] + '/event',
           query);
     end
   
